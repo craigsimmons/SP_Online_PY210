@@ -1,0 +1,11 @@
+new_list = []
+for variable in a_list:
+    if something_is_true:
+        new_list.append(expression)
+
+This kind of “filtering” loop can be achieved by adding a conditional to the comprehension:
+new_list = [expr for var in a_list if something_is_true]
+This is expressing the “filter” pattern and the “map” pattern at the same time – one reason I like the comprehension syntax so much.
+
+
+

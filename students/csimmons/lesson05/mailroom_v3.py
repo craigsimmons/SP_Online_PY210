@@ -44,6 +44,8 @@ letter = (('\nDear {},\n\n'
         'Sincerely,\n\n'
         'H.P. Lovecraft \n'))
 
+donation_err = 'Please enter a number or decimal for the donation amount'
+
 def print_donors(donors):
     print('\nMaster List of Donors:\n')
     for donor in donors:
@@ -63,7 +65,14 @@ def exist_donor(response, donors):
 def new_donor(response):    
     response = response.title()
     print(('\n{} is a new donor!').format(response))
-    gift = int(input(gift_prompt))
+    while True:
+        gift = input(gift_prompt)
+        try:
+            gift = float(gift)
+            print(gift)
+            break
+        except ValueError as error:
+            print(donation_err)
     donorlist_dict[response] = [gift]
     print(letter.format(response, gift))
 
