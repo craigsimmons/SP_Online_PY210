@@ -38,6 +38,10 @@ gift_prompt = '\n'.join(('Please enter the donation amount ("$" and commas are n
 
 donation_err = 'Error: Please enter a number or decimal.'
 
+letter_err = 'Thank you letter for {} not generated. Please check the destination folder'
+
+test_err = 'blah {} blah'
+
 letter = (('\nDear {},\n\n'
         'We would like to thank you for your recent - and extremely\n'
         'generous - donation of ${:,.2f} to the Famous Charity of Seattle\n'
@@ -52,7 +56,7 @@ def print_donors(donors):
         print(donor)
     print('\n')
 
-# Possible candidate for list comp
+
 def exist_donor(response, donors):
     response = response.title()
     while True:
@@ -60,6 +64,7 @@ def exist_donor(response, donors):
         try:
             gift = float(gift)
             print(gift)
+            print(test_err.format(response))
             break
         except ValueError as error:
             print(donation_err)
@@ -68,7 +73,7 @@ def exist_donor(response, donors):
             donorlist_dict.setdefault(donor, []).append(gift)
     print(letter.format(response, gift))
 
-# Consider combining with existdonor()
+#
 def new_donor(response):    
     response = response.title()
     print(('\n{} is a new donor!').format(response))
@@ -104,7 +109,7 @@ def send_thankyou():
         exist_donor(response, donors)
     else:
         new_donor(response)
-# handle this possible exception
+
 def generate_letters():
     isdir = os.path.isdir('letters')  
     if isdir == True:
@@ -115,9 +120,12 @@ def generate_letters():
         donor = str(key.replace(' ', '_'))
         gift = (list(value))[-1]
         filename = 'letters/' + donor + '.txt'
-        with open(filename, 'w') as output:
-            output.write(letter.format(donor, gift))
-        output.close
+        try:
+            with open(filename, 'w') as output:
+                output.write(letter.format(donor, gift))
+            output.close
+        except IOError:
+            print('Thank you letter for {} not generated. Please check the destination folder'.format(donor))
     print('\nThank You letters were generated for all donors\n')
 
 def display_report():
