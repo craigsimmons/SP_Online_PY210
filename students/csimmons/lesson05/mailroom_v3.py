@@ -138,7 +138,7 @@ def display_report():
 def program_exit():
     print('\nThank You. Exiting the Mailroom Application\n')
     sys.exit()
-# exception handling logic around prompt
+
 menu_prompt = '\n'.join(('Please choose from the options below:\n',
           '1 - Send a Thank You letter',
           '2 - Create a report',
@@ -156,8 +156,13 @@ menu_dict = {
 def menu_select(menu_prompt, menu_dict):
     while True:
         response = input(menu_prompt)
-        if menu_dict[response]() == 'exit':
+        try:
+            if menu_dict[response]() == 'exit':
+                break
+        except:
+            print('except')
             break
+
 
 
 if __name__ == '__main__':
