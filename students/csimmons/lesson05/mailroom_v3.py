@@ -36,6 +36,8 @@ thanks_prompt = '\n'.join(('\nPlease enter a donor name:',
 gift_prompt = '\n'.join(('Please enter the donation amount ("$" and commas are not needed)',
                 '>>>  '))
 
+menu_err = 'Please select a number from the menu'
+
 donation_err = 'Error: Please enter a number or decimal.'
 
 letter_err = 'Thank you letter for {} not generated. Please check the destination folder'
@@ -60,7 +62,6 @@ def exist_donor(response, donors):
         gift = input(gift_prompt)
         try:
             gift = float(gift)
-            print(test_err.format(response))
             break
         except ValueError as error:
             print(donation_err)
@@ -76,7 +77,6 @@ def new_donor(response):
         gift = input(gift_prompt)
         try:
             gift = float(gift)
-            print(gift)
             break
         except ValueError as error:
             print(donation_err)
@@ -160,7 +160,7 @@ def menu_select(menu_prompt, menu_dict):
             if menu_dict[response]() == 'exit':
                 break
         except:
-            print('except')
+            print('Please select a number from the menu')
             break
 
 
