@@ -5,16 +5,15 @@
 # Edited 12/3/2020 - v1.1 - csimmons
 # Edited 12/10/2020 - v1.2 - csimmons
 # edited 12/11 - 12/13 2020 - v2.0 -csimmons
-# edited 12/30/2020 - v3.0 -csimmons
+# edited 12/30 - 12/31/2020 - v3.0 -csimmons
 
-import sys
-import os 
+import os, sys
 import pathlib
 from operator import itemgetter
 
 donorlist_dict = {
     'Mary Newcomer' : [10000, 2500, 300],
-    'Christine Rutolo' : [3000, 6000, 750, 20000],
+    'Christine Ruotolo' : [3000, 6000, 750, 20000],
     'Martin Acevedo' : [2000, 5000],
     'Sutton Keaney' : [24500, 500, 3000, 5000, 1000],
     'David Basilio' : [750, 750, 750, 750, 5000, 750, 750],
@@ -22,25 +21,23 @@ donorlist_dict = {
     'Hussein Saffouri' : [1000, 1000, 2100, 7000, 55000],
     }
 
-menu_prompt = '\n'.join(('Please choose from the options below:\n',
+menu_prompt = '\n'.join(('\nPlease choose from the options below:\n',
           '1 - Send a Thank You letter',
           '2 - Create a report',
           '3 - Send thank you letters to all donors',
           '4 - Quit',
-          '>>> '))
+          '\n>>> '))
 
 thanks_prompt = '\n'.join(('\nPlease enter a donor name:',
                 '(Enter "List" to see current donors, "Exit" to return to main menu)',
-                '\n>>>  '))
-
-gift_prompt = '\n'.join(('Please enter the donation amount ("$" and commas are not needed)',
                 '>>>  '))
 
-menu_err = 'Please select a number from the menu'
+gift_prompt = '\n'.join(('Please enter the donation amount: ',
+                '>>>  '))
 
-donation_err = 'Error: Please enter a number or decimal.'
+donation_err = '\nError: Please enter a number or decimal ("$" and commas not needed).'
 
-letter_err = 'Thank you letter for {} not generated. Please check the destination folder'
+letter_err = '\nError: The letter for {} not generated. Please check the destination folder'
 
 letter = (('\nDear {},\n\n'
         'We would like to thank you for your recent - and extremely\n'
@@ -72,7 +69,7 @@ def exist_donor(response, donors):
 
 def new_donor(response):    
     response = response.title()
-    print(('\n{} is a new donor!').format(response))
+    print(('\n{} is a new donor!\n').format(response))
     while True:
         gift = input(gift_prompt)
         try:
@@ -154,17 +151,17 @@ menu_dict = {
             }
 
 def menu_select(menu_prompt, menu_dict):
+    selection = ['1', '2', '3', '4']
     while True:
         response = input(menu_prompt)
         try:
-            if menu_dict[response]() == 'exit':
+            if response not in selection:
+                print('\nNot a valid selection. Please try again!')
+            elif menu_dict[response]() == 'exit menu':
                 break
-        except:
-            print('Please select a number from the menu')
-            break
-
-
+        except KeyError:
+            print('\nNot a valid selection. Please try again!')
 
 if __name__ == '__main__':
-    print('\nWelcome to the Mailroom Application!')
+    print('\nWelcome to the Mailroom Application!\n')
     menu_select(menu_prompt, menu_dict)
