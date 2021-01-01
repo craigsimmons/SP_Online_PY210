@@ -40,8 +40,6 @@ donation_err = 'Error: Please enter a number or decimal.'
 
 letter_err = 'Thank you letter for {} not generated. Please check the destination folder'
 
-test_err = 'blah {} blah'
-
 letter = (('\nDear {},\n\n'
         'We would like to thank you for your recent - and extremely\n'
         'generous - donation of ${:,.2f} to the Famous Charity of Seattle\n'
@@ -56,14 +54,12 @@ def print_donors(donors):
         print(donor)
     print('\n')
 
-
 def exist_donor(response, donors):
     response = response.title()
     while True:
         gift = input(gift_prompt)
         try:
             gift = float(gift)
-            print(gift)
             print(test_err.format(response))
             break
         except ValueError as error:
@@ -73,7 +69,6 @@ def exist_donor(response, donors):
             donorlist_dict.setdefault(donor, []).append(gift)
     print(letter.format(response, gift))
 
-#
 def new_donor(response):    
     response = response.title()
     print(('\n{} is a new donor!').format(response))
@@ -125,7 +120,7 @@ def generate_letters():
                 output.write(letter.format(donor, gift))
             output.close
         except IOError:
-            print('Thank you letter for {} not generated. Please check the destination folder'.format(donor))
+            print(letter_err.format(donor))
     print('\nThank You letters were generated for all donors\n')
 
 def display_report():
@@ -157,13 +152,14 @@ menu_dict = {
             '3' : generate_letters,
             '4' : program_exit
             }
-             
+
 def menu_select(menu_prompt, menu_dict):
     while True:
         response = input(menu_prompt)
-        if menu_dict[response]() == 'exit menu':
+        if menu_dict[response]() == 'exit':
             break
-    
+
+
 if __name__ == '__main__':
     print('\nWelcome to the Mailroom Application!')
     menu_select(menu_prompt, menu_dict)
