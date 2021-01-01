@@ -33,8 +33,10 @@ thanks_prompt = '\n'.join(('\nPlease enter a donor name:',
                 '(Enter "List" to see current donors, "Exit" to return to main menu)',
                 '\n>>>  '))
 
-gift_prompt = '\n'.join(('\nPlease enter the donation amount ("$" and commas are not needed)',
+gift_prompt = '\n'.join(('Please enter the donation amount ("$" and commas are not needed)',
                 '>>>  '))
+
+donation_err = 'Error: Please enter a number or decimal.'
 
 letter = (('\nDear {},\n\n'
         'We would like to thank you for your recent - and extremely\n'
@@ -44,8 +46,6 @@ letter = (('\nDear {},\n\n'
         'Sincerely,\n\n'
         'H.P. Lovecraft \n'))
 
-donation_err = 'Please enter a number or decimal for the donation amount'
-
 def print_donors(donors):
     print('\nMaster List of Donors:\n')
     for donor in donors:
@@ -54,8 +54,15 @@ def print_donors(donors):
 
 # Possible candidate for list comp
 def exist_donor(response, donors):
-    gift = int(input(gift_prompt))
     response = response.title()
+    while True:
+        gift = input(gift_prompt)
+        try:
+            gift = float(gift)
+            print(gift)
+            break
+        except ValueError as error:
+            print(donation_err)
     for donor in donors:
         if response == donor:
             donorlist_dict.setdefault(donor, []).append(gift)
