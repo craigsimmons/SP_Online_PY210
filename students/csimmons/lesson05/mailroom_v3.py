@@ -54,6 +54,7 @@ def print_donors(donors):
     print('\n')
 
 def exist_donor(response, donors):
+    test = donorlist_dict.setdefault(donor, []).append(gift)
     response = response.title()
     while True:
         gift = input(gift_prompt)
@@ -62,6 +63,14 @@ def exist_donor(response, donors):
             break
         except ValueError as error:
             print(donation_err)
+    '''
+    if you're using dict.update don't assign it to the original variable since it returns None
+
+    [a.update(price=0) for a in data if a['price']=='']
+    without assignment will update the list...
+    
+
+    '''
     for donor in donors:
         if response == donor:
             donorlist_dict.setdefault(donor, []).append(gift)
